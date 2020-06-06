@@ -10,7 +10,8 @@ function saveOptions(e) {
     audio: document.querySelector("#audio").value.split(","),
     chat: document.querySelector("#chat").value.split(","),
     quote: document.querySelector("#quote").value.split(","),
-    link: document.querySelector("#link").value.split(",")
+    link: document.querySelector("#link").value.split(","),
+    queuePost: document.querySelector("#queuePost").checked
   });
 }
 
@@ -27,6 +28,7 @@ function restoreOptions() {
     document.querySelector("#chat").value = result.chat.join(",") || "";
     document.querySelector("#quote").value = result.quote.join(",") || "";
     document.querySelector("#link").value = result.link.join(",") || "";
+    document.querySelector("#queuePost").checked = result.queuePost || false
   }
 
   function onError(error) {
@@ -43,7 +45,8 @@ function restoreOptions() {
     audio: [],
     chat: [],
     quote: [],
-    link: []
+    link: [],
+    queuePost: false
   });
   getting.then(setCurrentChoice, onError);
 }

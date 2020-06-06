@@ -5,6 +5,16 @@ function onError(error) {
 }
   
 function onGot(item) {
+
+
+    if(item.queuePost){
+        let postBtn = document.querySelector("#post.btn")
+        postBtn.id = "queue"
+        postBtn.name = "queue"
+        postBtn.value = "queue"
+        postBtn.innerText = "Queue"
+    }
+
     let tags = [];
 
     switch(location){
@@ -75,7 +85,8 @@ let getting = browser.storage.sync.get({
     audio: [],
     chat: [],
     quote: [],
-    link: []
+    link: [],
+    queuePost: false
 });
 getting.then(onGot, onError);
 
@@ -97,7 +108,8 @@ function getReblogedUser(){
     return document.getElementsByClassName("card-body")[0].getElementsByClassName("avatar")[0].nextElementSibling.innerText
 }
 function getOriginalUser(){
-    return document.getElementsByClassName("card-header")[0].getElementsByClassName("row")[0].getElementsByClassName("col")[1].children[0].innerText
+    let length = document.getElementsByClassName("card-header")[0].getElementsByClassName("row")[0].getElementsByClassName("col").length
+    return document.getElementsByClassName("card-header")[0].getElementsByClassName("row")[0].getElementsByClassName("col")[length-1].children[0].innerText
 }
 function isRebloged(){
     return (document.getElementsByClassName("card-header")[0].children[0].children[1].childNodes[2].nodeValue.trim() == "reblogged")
