@@ -6,14 +6,17 @@ function onError(error) {
   
 function onGot(item) {
     let tags = [];
-    console.log(item)
 
     switch(location){
 
         case "reblog":
-            let user = document.getElementsByClassName("card-body")[0].children[1].innerText
             tags = tags.concat(item.reblog || [])
-            if(item.reblogUser) tags.push(user)
+            if(item.reblogUser){
+                let user
+                if(isRebloged()) user = getReblogedUser()
+                else user = getOriginalUser()
+                tags.push(user)
+            }
             addTags(tags)
             break
         
@@ -90,5 +93,13 @@ function addTags(tags) {
 
 }
 
-console.log("Running on "+ location)
+function getReblogedUser(){
+    return document.getElementsByClassName("card-body")[0].getElementsByClassName("avatar")[0].nextElementSibling.innerText
+}
+function getOriginalUser(){
+    return document.getElementsByClassName("card-header")[0].getElementsByClassName("row")[0].getElementsByClassName("col")[1].children[0].innerText
+}
+function isRebloged(){
+    return (document.getElementsByClassName("card-header")[0].children[0].children[1].childNodes[2].nodeValue.trim() == "reblogged")
+}
 
